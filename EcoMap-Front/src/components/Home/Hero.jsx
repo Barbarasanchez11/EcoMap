@@ -1,7 +1,10 @@
+import '../../styles/Hero.css'
+
 const Hero = () => {
     return (
         <main className="main-hero">
-         hola
+         <h1>Hola</h1>
+         
         </main>
     )
 }
