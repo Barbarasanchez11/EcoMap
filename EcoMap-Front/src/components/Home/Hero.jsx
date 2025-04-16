@@ -1,8 +1,8 @@
 const Hero = () => {
     return (
-        <>
-        hola
-        </>
+        <main className="main-hero">
+         hola
+        </main>
     )
 }
 export default Hero
