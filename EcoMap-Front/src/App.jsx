@@ -1,10 +1,16 @@
+import Routes from './routes/Routes';
+
 import 'leaflet/dist/leaflet.css';
+import './styles/App.css'
 
 
-export default function App() {
+
+
+const App = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white text-3xl font-bold">
-      Hello Tailwind World 🌍✨
-    </div>
-  );
+
+    <Routes />
+  )
+
 }
+export default App
