@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import '../styles/MyMap.css';
 
 const MyMap = () => {
-  const [position, setPosition] = useState([40.4168, -3.7038]); // Coordenadas de Madrid
+  const [position, setPosition] = useState([40.4168, -3.7038]); 
   const [clickedPosition, setClickedPosition] = useState(null);
 
-  // Depuración: Verificar estado inicial
-  console.log('Estado inicial - Posición:', position, 'Clic:', clickedPosition);
+  
 
   // Componente para manejar clics en el mapa
   const MapClickHandler = () => {
@@ -31,7 +30,7 @@ const MyMap = () => {
     return null;
   };
 
-  // Depuración: Verificar estado después de cada render
+
   console.log('Render - Posición:', position, 'Clic:', clickedPosition);
 
   return (
