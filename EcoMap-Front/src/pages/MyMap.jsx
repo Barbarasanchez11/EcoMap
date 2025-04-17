@@ -1,38 +1,63 @@
-// MapView.jsx
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-
-// Importamos los íconos correctamente
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconRetina from 'leaflet/dist/images/marker-icon-2x.png';
-import shadow from 'leaflet/dist/images/marker-shadow.png';
-
-// Configuramos los íconos antes de renderizar el mapa
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: iconRetina,
-  iconUrl: icon,
-  shadowUrl: shadow,
-});
+import React, { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+import '../styles/MyMap.css';
 
 const MyMap = () => {
-  const position = [40.4168, -3.7038]; // Por ejemplo, Madrid
+  const [position, setPosition] = useState([40.4168, -3.7038]); // Coordenadas de Madrid
+  const [clickedPosition, setClickedPosition] = useState(null);
+
+  // Depuración: Verificar estado inicial
+  console.log('Estado inicial - Posición:', position, 'Clic:', clickedPosition);
+
+  // Componente para manejar clics en el mapa
+  const MapClickHandler = () => {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng;
+        console.log('Clic en el mapa:', { lat, lng });
+        setClickedPosition([lat, lng]);
+      },
+    });
+    return null;
+  };
+
+  // Componente para centrar el mapa dinámicamente
+  const RecenterMap = ({ center }) => {
+    const map = useMap();
+    useEffect(() => {
+      console.log('Centrando mapa en:', center);
+      map.setView(center, map.getZoom());
+    }, [center, map]);
+    return null;
+  };
+
+  // Depuración: Verificar estado después de cada render
+  console.log('Render - Posición:', position, 'Clic:', clickedPosition);
 
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
-      <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={position}>
+    <main className='main-hero'>
+
+    <MapContainer className="map-container" center={position} zoom={13}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      <Marker position={position}>
+        <Popup>
+          ¡Aquí estoy! <br /> Madrid, España.
+        </Popup>
+      </Marker>
+      {clickedPosition && (
+        <Marker position={clickedPosition}>
           <Popup>
-            ¡Hola! Este es un marcador en Madrid.
+            Clic en: <br /> Lat: {clickedPosition[0]}, Lng: {clickedPosition[1]}
           </Popup>
         </Marker>
-      </MapContainer>
-    </div>
+      )}
+      <MapClickHandler />
+      <RecenterMap center={position} />
+    </MapContainer>
+    </main>
   );
 };
 
