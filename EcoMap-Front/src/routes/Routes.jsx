@@ -5,11 +5,13 @@ import Hero from '../components/Home/Hero';
 import Footer from '../components/Footer';
 import ContactUs from '../pages/ContactUs';
 import AboutUs from '../pages/AboutUs';
+import MyMap from '../pages/MyMap';
 
 const AppRoutes = () => { 
   return (
     <Router>
       <Header />  
+        <MyMap />
       <Routes>
         <Route path="/" element={<Hero />} />
         <Route path='/aboutus' element={<AboutUs />} />
